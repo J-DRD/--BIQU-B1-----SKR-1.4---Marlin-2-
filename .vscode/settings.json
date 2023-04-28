@@ -1,0 +1,20 @@
+{
+    "git.ignoreLimitWarning": true,
+    "FSharp.suggestGitignore": false,
+    "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
+        "clang-diagnostic-error",
+        "clang-diagnostic-error",
+        "clang-diagnostic-error"
+    ],
+    "[cpp]": {
+        "editor.formatOnPaste": true,
+        "emmet.showAbbreviationSuggestions": false,
+        "workbench.editor.languageDetection": false,
+        "editor.inlineSuggest.enabled": false,
+        "editor.suggest.preview": true,
+        "editor.suggest.showIssues": false
+    },
+    "python.analysis.extraPaths": [
+        "./buildroot/share/PlatformIO/scripts"
+    ]
+}
