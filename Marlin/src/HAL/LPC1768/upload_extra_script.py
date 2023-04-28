@@ -5,8 +5,10 @@
 #  else if target_drive is found then that drive is used
 #
 from __future__ import print_function
+from ast import Import
 
 import pioutil
+
 if pioutil.is_pio_build():
 
     target_filename = "FIRMWARE.CUR"
@@ -15,7 +17,7 @@ if pioutil.is_pio_build():
     import platform
 
     current_OS = platform.system()
-    Import("env")
+    env = Import("env")
 
     def print_error(e):
         print('\nUnable to find destination disk (%s)\n' \
@@ -132,4 +134,4 @@ if pioutil.is_pio_build():
         except Exception as e:
             print_error(str(e))
 
-    env.AddPreAction("upload", before_upload)
+    #env.AddPreAction("upload", before_upload)
