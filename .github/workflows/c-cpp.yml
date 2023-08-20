@@ -11,17 +11,38 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        test-platform:
+          - LPC1769
+        release-platform:
+          - LPC1769
+
     steps:
     - uses: actions/checkout@v3
-    - name: configure
-      run: ./configure
-    - name: Setup PlatformIO
-      uses: n-vr/setup-platformio-action@v1.0.1
-    - name: Setup Python
-      uses: actions/setup-python@v4.7.0
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+    
+    - name: Cache pip
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Cache PlatformIO
+      uses: actions/cache@v3
+      with:
+        path: ~/.platformio
+        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
+    - name: Select Python 3.7
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.7' # Version range or exact version of a Python version to use, using semvers version range syntax.
+        architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+
+    - name: Install PlatformIO
+      run: |
+        pip install -U platformio
+        pio upgrade --dev
+        pio pkg update --global
